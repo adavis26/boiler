@@ -54,6 +54,10 @@
         "jestConfig": "apps/api/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "prisma-generate": {
+      "executor": "nx:run-commands",
+      "options": { "command": "echo 'Enter migration name: ' && npx prisma migrate dev", "color": true }
     }
   },
   "tags": []
