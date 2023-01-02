@@ -1,0 +1,29 @@
+<div style="display: flex; width: 100%; justify-content: center">
+    <mat-card style="min-width: 300px; margin-top: 15%">
+      <mat-card-header><h3>Sign Up</h3></mat-card-header>
+      <mat-card-content>
+        <form style="display: flex; flex-direction: column" [formGroup]="signupForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>username</mat-label>
+            <input matInput value="" />
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+            <mat-label>password</mat-label>
+            <input autocomplete="off" matInput value="" type="password" />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>confirm password</mat-label>
+            <input autocomplete="off" matInput value="" type="password" />
+          </mat-form-field>
+          <button mat-stroked-button type="submit" (submit)="signup()">create account</button>
+        </form>
+        <p style="font-size: x-small; margin-top: 2em">
+          Already have an account?
+          <a [routerLink]="['/login']" routerLinkActive="router-link-active">login here</a>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
