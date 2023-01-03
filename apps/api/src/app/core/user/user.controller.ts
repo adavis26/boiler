@@ -1,3 +1,4 @@
+import { CreateUserDTO } from '@boiler/api-interfaces';
 import {
   Body,
   Controller,
@@ -6,7 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { CreateUserDTO } from './user.model';
+import { Public } from '../auth/public.decorator';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -19,6 +20,7 @@ export class UserController {
   }
 
   @Post()
+  @Public()
   public createUser(@Body() payload: CreateUserDTO) {
     return this.userService.createUser(payload);
   }

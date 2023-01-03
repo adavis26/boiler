@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginDTO } from '@boiler/api-interfaces';
 import { tap } from 'rxjs';
 
@@ -7,7 +8,10 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router
+  ) {}
 
   public login(payload: LoginDTO) {
     return this.http
@@ -15,7 +19,13 @@ export class LoginService {
       .pipe(
         tap((res) =>
           window.localStorage.setItem('access_token', res.access_token)
-        )
+        ),
+        tap(() => this.router.navigate(['/']))
       );
+  }
+
+  public logout() {
+    window.localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

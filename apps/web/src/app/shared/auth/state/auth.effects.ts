@@ -4,7 +4,16 @@ import { Actions } from '@ngneat/effects-ng';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { LoginService } from '../login/login.service';
 import { SignupService } from '../signup/signup.service';
-import { login, loginError, loginSuccess, signup } from './auth.repository';
+import {
+  login,
+  loginError,
+  loginSuccess,
+  logout,
+  signup,
+  signupFailure,
+  signupSuccess,
+  unathenticatedLogout,
+} from './auth.repository';
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffects {
@@ -18,11 +27,17 @@ export class AuthEffects {
     actions.pipe(
       ofType(signup),
       switchMap((payload) =>
-        this.signupService.signup({
-          username: payload.username,
-          password: payload.password,
-        })
-      )
+        this.signupService
+          .signup({
+            username: payload.username,
+            password: payload.password,
+          })
+          .pipe(
+            map(() => of(this.actions.dispatch(signupSuccess()))),
+            catchError((e) => of(this.actions.dispatch(signupFailure(e))))
+          )
+      ),
+      catchError((e) => of(this.actions.dispatch(signupFailure(e))))
     )
   );
 
@@ -35,9 +50,19 @@ export class AuthEffects {
             username: payload.username,
             password: payload.password,
           })
-          .pipe(map(() => of(this.actions.dispatch(loginSuccess()))))
+          .pipe(
+            map(() => of(this.actions.dispatch(loginSuccess()))),
+            catchError((e) => of(this.actions.dispatch(loginError(e))))
+          )
       ),
       catchError((e) => of(this.actions.dispatch(loginError(e))))
+    )
+  );
+
+  logout$ = createEffect((actions) =>
+    actions.pipe(
+      ofType(logout, unathenticatedLogout),
+      switchMap(() => of(this.loginService.logout()))
     )
   );
 }

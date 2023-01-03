@@ -9,7 +9,7 @@ export class SignupService {
   constructor(private readonly http: HttpClient) {}
 
   public signup(payload: CreateUserDTO) {
-    return this.http.post('/user', payload);
+    return this.http.post('/api/users', payload);
   }
 
 }

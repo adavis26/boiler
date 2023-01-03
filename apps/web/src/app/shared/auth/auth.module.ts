@@ -8,6 +8,7 @@ import { LoginService } from './login/login.service';
 import { SignupService } from './signup/signup.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Actions } from '@ngneat/effects';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [LoginComponent, SignupComponent],
@@ -19,7 +20,7 @@ import { Actions } from '@ngneat/effects';
     FormsModule,
     // EffectsNgModule.forFeature([AuthEffects]),
   ],
-  providers: [LoginService, SignupService, Actions],
-  exports: []
+  providers: [LoginService, SignupService, Actions, AuthGuard],
+  exports: [],
 })
 export class AuthModule {}
