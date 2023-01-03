@@ -34,6 +34,9 @@ export const signupFailure = authActions.create('signup success', props<any>());
 @Injectable({ providedIn: 'root' })
 export class AuthRepository {
   public user$ = store.pipe(select((state) => state.user));
+  public isAuthenticated$ = store.pipe(
+    select((state) => state.isAuthenticated)
+  );
 
   constructor(private readonly actions: Actions) {
     this.reducer();
@@ -45,7 +48,9 @@ export class AuthRepository {
         case loginSuccess.type:
           this.setUser(action['user']);
           return;
-
+        case logout.type:
+          this.logout();
+          return;
         default:
           break;
       }
@@ -58,5 +63,9 @@ export class AuthRepository {
       user,
       isAuthenticated: true,
     }));
+  }
+
+  public logout() {
+    store.update(() => initialStore);
   }
 }

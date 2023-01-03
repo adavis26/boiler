@@ -1,0 +1,15 @@
+<mat-toolbar>
+  <div style="display: flex; justify-content: space-between; width: 100%">
+    <h1>Boiler 🏭</h1>
+
+    <ng-container *ngIf="user$ | async; else loggedOut">
+      <div style="font-size: 1.1em; padding: 1.1em; display: flex; justify-content: space-between;">
+        <p>{{ (user$ | async)?.username }}</p>
+
+        <button style="margin-left: 20px; margin-top: 3px" aria-label="logout" mat-icon-button (click)="logout()"><mat-icon>logout</mat-icon></button>
+      </div>
+    </ng-container>
+  </div>
+</mat-toolbar>
+
+<ng-template #loggedOut></ng-template>
