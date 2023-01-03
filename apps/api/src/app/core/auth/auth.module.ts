@@ -11,9 +11,11 @@ import { LocalStrategy } from './strategies/local.strategy';
 @Module({
   imports: [
     PassportModule,
-    JwtModule.register({
-      secret: 'foo-bar',
-      signOptions: { expiresIn: '60s' },
+    JwtModule.registerAsync({
+      useFactory: async () => ({
+        secret: process.env.JWT_SECRET,
+        signOptions: { expiresIn: process.env.JWT_EXPIRATION },
+      }),
     }),
   ],
   controllers: [AuthController],

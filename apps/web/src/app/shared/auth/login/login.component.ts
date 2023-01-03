@@ -31,9 +31,7 @@ export class LoginComponent {
 
   public login() {
     const { username, password } = this.loginForm.value;
-    console.log(this.loginForm.value);
     if (username && password) {
-      console.log('dispatch');
       this.actions.dispatch(login({ username, password }));
     }
   }

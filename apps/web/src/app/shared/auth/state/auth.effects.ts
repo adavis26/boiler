@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '@boiler/api-interfaces';
 import { createEffect, ofType } from '@ngneat/effects';
 import { Actions } from '@ngneat/effects-ng';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
@@ -20,7 +21,7 @@ export class AuthEffects {
   constructor(
     private signupService: SignupService,
     private loginService: LoginService,
-    private actions: Actions
+    private actions: Actions,
   ) {}
 
   signup$ = createEffect((actions) =>
@@ -51,7 +52,7 @@ export class AuthEffects {
             password: payload.password,
           })
           .pipe(
-            map(() => of(this.actions.dispatch(loginSuccess()))),
+            map((payload) => of(this.actions.dispatch(loginSuccess(payload)))),
             catchError((e) => of(this.actions.dispatch(loginError(e))))
           )
       ),

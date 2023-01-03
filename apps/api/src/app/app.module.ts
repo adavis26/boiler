@@ -11,7 +11,7 @@ import { JwtAuthGuard } from './core/auth/auth.guard';
   imports: [
     UserModule,
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../../api.env' })
+    ConfigModule.forRoot({ envFilePath: [`${process.cwd()}/.env.api`] }),
   ],
   controllers: [AppController],
   providers: [

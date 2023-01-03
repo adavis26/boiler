@@ -1,3 +1,4 @@
+import { LoginRes } from '@boiler/api-interfaces';
 import { Controller, Post, UseGuards, Request } from '@nestjs/common';
 import { LocalAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
@@ -10,7 +11,7 @@ export class AuthController {
   @Post('login')
   @Public()
   @UseGuards(LocalAuthGuard)
-  public async login(@Request() req) {
+  public async login(@Request() req): Promise<LoginRes> {
     return await this.authService.login(req.user);
   }
 }
