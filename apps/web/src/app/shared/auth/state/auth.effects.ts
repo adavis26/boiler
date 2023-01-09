@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from '@boiler/api-interfaces';
 import { createEffect, ofType } from '@ngneat/effects';
 import { Actions } from '@ngneat/effects-ng';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
