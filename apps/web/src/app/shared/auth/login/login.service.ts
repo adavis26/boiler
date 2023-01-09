@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginDTO } from '@boiler/api-interfaces';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class LoginService {
     private readonly jwtHelperService: JwtHelperService
   ) {}
 
-  public login(payload: LoginDTO) {
+  public login(payload: LoginDTO): Observable<{ user: any }> {
     return this.http
       .post<{ access_token: string }>('api/auth/login', payload)
       .pipe(
@@ -27,7 +27,7 @@ export class LoginService {
       );
   }
 
-  public logout() {
+  public logout(): void {
     window.localStorage.clear();
     this.router.navigate(['/login']);
   }

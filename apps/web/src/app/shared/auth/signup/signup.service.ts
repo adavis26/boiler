@@ -11,5 +11,4 @@ export class SignupService {
   public signup(payload: CreateUserDTO) {
     return this.http.post('/api/users', payload);
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,7 +7,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { Actions } from '@ngneat/effects-ng';
-import { signup } from '../state/auth.repository';
+import { Observable } from 'rxjs';
+import { AuthRepository, signup, signupClear } from '../state/auth.repository';
 
 interface SignupForm {
   username: FormControl<string>;
@@ -20,10 +21,14 @@ interface SignupForm {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss', '../auth.styles.scss'],
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
   public signupForm: FormGroup<SignupForm>;
+  public signUp$: Observable<any>;
 
-  constructor(private actions: Actions) {
+  constructor(
+    private actions: Actions,
+    private readonly authRepository: AuthRepository
+  ) {
     this.signupForm = new FormGroup<SignupForm>({
       username: new FormControl('', { nonNullable: true }),
       password: new FormControl('', {
@@ -35,6 +40,12 @@ export class SignupComponent {
         updateOn: 'blur',
       }),
     });
+
+    this.signUp$ = this.authRepository.signUp$;
+  }
+
+  ngOnDestroy(): void {
+    this.actions.dispatch(signupClear());
   }
 
   public signup() {
@@ -42,6 +53,10 @@ export class SignupComponent {
     if (username && password) {
       this.actions.dispatch(signup({ username, password }));
     }
+  }
+
+  public reload(): void {
+    this.actions.dispatch(signupClear());
   }
 
   private confirmPasswordValidation(): ValidatorFn {
