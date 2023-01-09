@@ -11,7 +11,7 @@ interface LoginForm {
 @Component({
   selector: 'boiler-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss', '../auth.styles.scss'],
 })
 export class LoginComponent {
   public loginForm: FormGroup<LoginForm>;
