@@ -28,6 +28,7 @@
     "@ngneat/elf-cli": "^3.0.1",
     "@ngneat/elf-devtools": "^1.2.1",
     "@ngneat/elf-entities": "^4.4.3",
+    "@nrwl/cli": "^15.4.5",
     "@prisma/client": "^4.8.0",
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.1.0",
@@ -81,4 +82,3 @@
     "schema": "apps/api/src/app/prisma/schema.prisma"
   }
 }
-

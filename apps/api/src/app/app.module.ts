@@ -6,13 +6,18 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './core/auth/auth.guard';
+import { environment } from '../environments/environment';
 
 @Module({
   imports: [
     UserModule,
     AuthModule,
     ConfigModule.forRoot({
-      envFilePath: [`${process.cwd()}/apps/api/.env.api`],
+      envFilePath: [
+        environment.production
+          ? `.env.api`
+          : `${process.cwd()}/apps/api/.env.api.local`,
+      ],
     }),
   ],
   controllers: [AppController],

@@ -1,0 +1,14 @@
+Dockerfile
+node_modules
+dist
+.angular
+.vscode
+README.md
+docker-compose.yml
+.gitignore
+.eslintrc.json
+.prettierignore
+.prettierrc
+jest.config.ts
+jest.preset.js
+rename-project.sh
