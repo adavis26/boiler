@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
-appName=$1
 
-if [[ -z $appName ]]; then
-    echo "No project name! Please specify project name."
+echo "What would you like to name this project?"
+read projectName
+
+if ! [[ $projectName =~ ^([a-z][a-z0-9]*)(-[a-z0-9]+)*$ ]]; then
+    echo "Project name is not kebab case. Ex new or new-great-app"
     exit 1
 fi
 
-grep -rnw --exclude-dir={node_modules,.angular,dist} . -e 'boiler' | while read -r line; do
+echo $'renaming files...\n'
+grep -rnw apps/* libs/* package.json nx.json -e 'boiler' | while read -r line; do
     file="$(echo $line | sed "s/:.*//")"
     echo "Modifying: $file"
-    sed 's/boiler/app-name/' $file
+    sed -i "s/boiler/$projectName/g" $file
 done
+
+echo "Renamed project to ${projectName}"
+
+echo $'reinstalling npm packages...\n'
+npm install
+
+echo $'rebuilding api-interfaces lib...\n'
+nx build api-interfaces
+
+echo "done!"
