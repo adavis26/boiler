@@ -1,11 +1,20 @@
 version: "3.8"
 
 services:
+  web:
+    image: web:dev
+    build: ./apps/web/
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./apps/web/.env.web
+
   api:
     image: api:dev
     build: ./apps/api/
     ports:
       - 3333:3333
+
   db:
     image: postgres
     ports:

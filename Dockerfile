@@ -9,4 +9,4 @@ COPY . .
 RUN npm install --production
 RUN npm i @nrwl/js
 
-RUN nx run-many --target=build --configuration=production
+RUN nx run web:server:production && nx run-many --target=build --configuration=production
